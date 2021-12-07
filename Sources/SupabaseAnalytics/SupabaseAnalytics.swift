@@ -78,7 +78,20 @@ public final class SupabaseAnalytics {
     params["system_name"] = device.systemName
     params["system_version"] = device.systemVersion
     params["device"] = device.safeDescription
-    params["battery_state"] = device.batteryState?.description
+
+    switch device.batteryState {
+    case .charging(let level):
+      params["battery_state"] = "charging"
+      params["battery_level"] = level
+    case .unplugged(let level):
+      params["battery_state"] = "unplugged"
+      params["battery_level"] = level
+    case .full:
+      params["battery_state"] = "full"
+    case .none:
+      break
+    }
+
     params["orientation"] = device.orientation.description
     params["volume_total_capacity"] = Device.volumeTotalCapacity
     params["volume_available_capacity"] = Device.volumeAvailableCapacity
