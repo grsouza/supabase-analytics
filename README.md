@@ -2,6 +2,10 @@
 
 Analytics provides insight on app usage and user engagement. Its reports help you understand clearly how your users behave, which enables you to make informed decisions regarding app marketing and performance optimizations.
 
+## Installing
+
+This package is distributed through Swift Package Manager, add `.package(url: "https://github.com/grsouza/supabase-analytics", branch: "main")` to your `Package.swift` file.
+
 ## Get started with Analytics
 Create a table called `analytics` on the database:
 
