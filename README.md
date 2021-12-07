@@ -18,7 +18,7 @@ create table public.analytics (
 );
 ```
 
-Initialize the analytics addon:
+Initialize the analytics client:
 
 ```swift
 let client: SupabaseClient = ...
