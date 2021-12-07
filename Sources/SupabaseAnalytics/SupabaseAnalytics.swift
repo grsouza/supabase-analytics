@@ -92,7 +92,7 @@ public final class SupabaseAnalytics {
       break
     }
 
-    params["lower_power_mode"] = device.batteryState?.lowPowerMode
+    params["low_power_mode"] = device.batteryState?.lowPowerMode
     params["orientation"] = device.orientation.description
     params["volume_total_capacity"] = Device.volumeTotalCapacity
     params["volume_available_capacity"] = Device.volumeAvailableCapacity
