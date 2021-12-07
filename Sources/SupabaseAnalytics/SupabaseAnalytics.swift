@@ -5,16 +5,15 @@ import Supabase
 
 public final class SupabaseAnalytics {
 
-  public static var shared: SupabaseAnalytics {
+  private static var instance: SupabaseAnalytics?
+  private static var shared: SupabaseAnalytics {
     guard let instance = instance else {
       fatalError(
-        "SupabaseAnalytics.initialize() should be called before using SupabaseAnalytics.shared")
+        "SupabaseAnalytics.initialize() should be called before using it.")
     }
 
     return instance
   }
-
-  private static var instance: SupabaseAnalytics?
 
   private let client: SupabaseClient
   private let tableName: String
@@ -53,21 +52,21 @@ public final class SupabaseAnalytics {
     if logUserSignIn {
       instance?.authChangeSubscription = client.auth.onAuthStateChange { event, session in
         if event == .signedIn {
-          instance?.logUserSession()
+          SupabaseAnalytics.logUserSession()
         }
       }
     }
   }
 
-  public func logEvent(name: String, params: [String: Any]? = nil) {
+    public static func logEvent(name: String, params: [String: Any]? = nil, completion: ((Error?) -> Void)? = nil) {
     assert(name.count >= 2, "The name must be at least 2 characters long")
 
     let locale = NSLocale.current as NSLocale
     let device = Device.current
 
     var params = params ?? [:]
-    if useLoggedUserInfo {
-      params["user_id"] = client.auth.user?.id
+    if shared.useLoggedUserInfo {
+      params["user_id"] = shared.client.auth.user?.id
     }
 
     params["country_code"] = locale.countryCode
@@ -102,7 +101,7 @@ public final class SupabaseAnalytics {
       Device.volumeAvailableCapacityForOpportunisticUsage
 
     // TODO: Accumultate events locally for sending to server in batch.
-    client.database.from(tableName)
+    shared.client.database.from(shared.tableName)
       .insert(
         values: [
           "name": name.replacingOccurrences(of: " ", with: "_"),
@@ -115,13 +114,15 @@ public final class SupabaseAnalytics {
         switch result {
         case .success(let response):
           NSLog("Response statusCode: %d", response.status)
+            completion?(nil)
         case .failure(let error):
           NSLog("Response failure: %@", error.localizedDescription)
+            completion?(error)
         }
       }
   }
 
-  private func logUserSession() {
+  private static func logUserSession() {
     logEvent(name: "user_session")
   }
 }
