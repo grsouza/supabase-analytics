@@ -18,7 +18,7 @@ Initialize the analytics addon:
 
 ```swift
 let client: SupabaseClient = ...
-SupabaseAnalytics.initialize(client: client);
+SupabaseAnalytics.initialize(client: client)
 ```
 
 ### Log an event
