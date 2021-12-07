@@ -31,3 +31,7 @@ You can disable the automatic logging when initializing by passing `logUserSignI
 
 ### Log User Identifier
 The `user_id` is logged on every event automatically. You can disable this when initializing by passing `useLoggedUserInfo: false`.
+
+## Acknowledgement
+
+This package is based on the Dart/Flutter implementation found at https://github.com/bdlukaa/supabase_addons from [@bdlukaadev](https://twitter.com/bdlukaadev)
