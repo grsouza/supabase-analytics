@@ -1,3 +1,4 @@
+import Combine
 import DeviceKit
 import Foundation
 import GoTrue
@@ -20,7 +21,7 @@ public final class SupabaseAnalytics {
   private let useLoggedUserInfo: Bool
   private let logUserSignIn: Bool
 
-  private var authChangeSubscription: Subscription?
+  private var authChangeCancellable: AnyCancellable?
 
   private init(
     client: SupabaseClient,
@@ -35,8 +36,8 @@ public final class SupabaseAnalytics {
   }
 
   deinit {
-    authChangeSubscription?.unsubscribe()
-    authChangeSubscription = nil
+    authChangeCancellable?.cancel()
+    authChangeCancellable = nil
   }
 
   public static func initialize(
@@ -50,15 +51,15 @@ public final class SupabaseAnalytics {
       logUserSignIn: logUserSignIn)
 
     if logUserSignIn {
-      instance?.authChangeSubscription = client.auth.onAuthStateChange { event, session in
-        if event == .signedIn {
-          SupabaseAnalytics.logUserSession()
-        }
-      }
+      instance?.authChangeCancellable = client.auth.authEventChange
+        .filter { $0 == .signedIn }
+        .sink { _ in SupabaseAnalytics.logUserSession() }
     }
   }
 
-    public static func logEvent(name: String, params: [String: Any]? = nil, completion: ((Error?) -> Void)? = nil) {
+  public static func logEvent(
+    name: String, params: [String: Any]? = nil, completion: ((Error?) -> Void)? = nil
+  ) {
     assert(name.count >= 2, "The name must be at least 2 characters long")
 
     let locale = NSLocale.current as NSLocale
@@ -66,7 +67,7 @@ public final class SupabaseAnalytics {
 
     var params = params ?? [:]
     if shared.useLoggedUserInfo {
-      params["user_id"] = shared.client.auth.user?.id
+      params["user_id"] = shared.client.auth.session?.user.id
     }
 
     params["country_code"] = locale.countryCode
@@ -100,24 +101,30 @@ public final class SupabaseAnalytics {
     params["volume_available_capacity_for_opportunistic_usage"] =
       Device.volumeAvailableCapacityForOpportunisticUsage
 
+    struct Event: Encodable {
+      var name: String
+      var params: [String: String]
+      var timestamp: Date
+    }
+
     // TODO: Accumultate events locally for sending to server in batch.
     shared.client.database.from(shared.tableName)
       .insert(
-        values: [
-          "name": name.replacingOccurrences(of: " ", with: "_"),
-          "params": params,
-          "timestamp": Date().timeIntervalSince1970,
-        ],
+        values: Event(
+          name: name.replacingOccurrences(of: " ", with: "_"),
+          params: params.mapValues(String.init(describing:)),
+          timestamp: Date()
+        ),
         returning: .minimal
       )
       .execute { result in
         switch result {
         case .success(let response):
           NSLog("Response statusCode: %d", response.status)
-            completion?(nil)
+          completion?(nil)
         case .failure(let error):
           NSLog("Response failure: %@", error.localizedDescription)
-            completion?(error)
+          completion?(error)
         }
       }
   }

@@ -2,39 +2,66 @@
   "object": {
     "pins": [
       {
+        "package": "AnyCodable",
+        "repositoryURL": "https://github.com/Flight-School/AnyCodable",
+        "state": {
+          "branch": null,
+          "revision": "11423ef0c756e8a1f6b4bb576dab9d97bc016c70",
+          "version": "0.6.4"
+        }
+      },
+      {
         "package": "DeviceKit",
         "repositoryURL": "https://github.com/devicekit/DeviceKit",
         "state": {
           "branch": null,
-          "revision": "da57c444cbb7b6159aa871534d4cf2616d1d55c6",
-          "version": "4.5.2"
+          "revision": "cc49d42dafd69c96abbf695cedbefab6441f1afa",
+          "version": "4.6.0"
+        }
+      },
+      {
+        "package": "Get",
+        "repositoryURL": "https://github.com/kean/Get",
+        "state": {
+          "branch": null,
+          "revision": "b1137bf8315479cddc79fcb04d9db7bc8117e16f",
+          "version": "0.8.0"
         }
       },
       {
         "package": "GoTrue",
-        "repositoryURL": "https://github.com/supabase/gotrue-swift.git",
+        "repositoryURL": "https://github.com/supabase-community/gotrue-swift",
         "state": {
-          "branch": "main",
-          "revision": "e84718e5a5183f7c2b98c6d086916d617bc74712",
-          "version": null
+          "branch": null,
+          "revision": "c42a0a50cfe7c77179041bfb3720f95cecd9ff21",
+          "version": "0.0.3"
+        }
+      },
+      {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
+        "state": {
+          "branch": null,
+          "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
+          "version": "4.2.2"
         }
       },
       {
         "package": "PostgREST",
         "repositoryURL": "https://github.com/supabase/postgrest-swift",
         "state": {
-          "branch": "master",
-          "revision": "bd7dcf89812edae4938111bdf14c6b3d2445c57c",
-          "version": null
+          "branch": null,
+          "revision": "6583648399a3ff3979d7df388a8e7ba740e14378",
+          "version": "0.0.2"
         }
       },
       {
         "package": "Realtime",
         "repositoryURL": "https://github.com/supabase/realtime-swift.git",
         "state": {
-          "branch": "main",
-          "revision": "a65d04c31db2ee7711306ceb316e71d8e1ede4bf",
-          "version": null
+          "branch": null,
+          "revision": "2b55564e1a724ca62067b0dc76e5e69439c30b76",
+          "version": "0.0.1"
         }
       },
       {
@@ -50,9 +77,9 @@
         "package": "SupabaseStorage",
         "repositoryURL": "https://github.com/supabase/storage-swift.git",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "ecc1b8b860cc67096be241f15d370451ed93f3ae",
-          "version": null
+          "version": "0.0.1"
         }
       },
       {
@@ -60,8 +87,17 @@
         "repositoryURL": "https://github.com/supabase-community/supabase-swift",
         "state": {
           "branch": "master",
-          "revision": "13e11b1f46b5309ea5cafd59542112b9ab9718d4",
+          "revision": "972bc95409a911f417e4aa07fc8f38ec2ff69cb6",
           "version": null
+        }
+      },
+      {
+        "package": "ComposableKeychain",
+        "repositoryURL": "https://github.com/binaryscraping/swift-composable-keychain",
+        "state": {
+          "branch": null,
+          "revision": "3ebddfe9e9232218bada99ab6d6b3ca1fd94f112",
+          "version": "0.0.2"
         }
       },
       {
@@ -71,6 +107,24 @@
           "branch": null,
           "revision": "37760e9a52030bb9011972c5213c3350fa9d41fd",
           "version": "1.0.0"
+        }
+      },
+      {
+        "package": "URLQueryEncoder",
+        "repositoryURL": "https://github.com/kean/URLQueryEncoder",
+        "state": {
+          "branch": null,
+          "revision": "4cc975d4d075d0e62699a796a08284e217d4ee93",
+          "version": "0.2.0"
+        }
+      },
+      {
+        "package": "xctest-dynamic-overlay",
+        "repositoryURL": "https://github.com/pointfreeco/xctest-dynamic-overlay",
+        "state": {
+          "branch": null,
+          "revision": "50a70a9d3583fe228ce672e8923010c8df2deddd",
+          "version": "0.2.1"
         }
       }
     ]
